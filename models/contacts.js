@@ -4,7 +4,14 @@ const contacts = require('./contacts.json');
 
 const listContacts = async () => contacts;
 
-const getContactById = async (contactId) => {};
+const getContactById = async (contactId = 1) => {
+  const products = await listContacts();
+  const product = products.find((item) => item.id === contactId.toString());
+  if (!product) {
+    return null;
+  }
+  return product;
+};
 
 const removeContact = async (contactId) => {};
 

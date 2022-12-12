@@ -1,18 +1,46 @@
 const express = require('express')
 const {
   listContacts,
-  // getContactById,
+  getContactById,
   // addContact,
   // removeContact,
 } = require('../../models/contacts.js');
 const router = express.Router()
 
 router.get('/', async (req, res, next) => {
-  res.json(await listContacts());
+   try {
+     const products = await listContacts();
+     res.json({
+       status: 'success',
+       code: 200,
+       data: {
+         result: products,
+       },
+     });
+   } catch (error) {
+     next(error);
+   }
 })
 
 router.get('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
+  try {
+    const { contactId } = req.params;
+    const result = await getContactById(contactId);
+    if (!result) {
+      const error = new Error(`Product with id=${contactId} not found`);
+      error.status = 404;
+      throw error;
+    }
+    res.json({
+      status: 'success',
+      code: 200,
+      data: {
+        result,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
 })
 
 router.post('/', async (req, res, next) => {
