@@ -4,6 +4,7 @@ const {
   getContactById,
   addContact,
   removeContact,
+  updateContact,
 } = require('../../models/contacts.js');
 const router = express.Router();
 const { productSchema } = require('../../schemas');
@@ -78,7 +79,26 @@ router.delete('/:contactId', async (req, res, next) => {
 });
 
 router.put('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' });
+  try {
+    const { error } = productSchema.validate(req.body);
+    if (error) {
+      const err = new Error(error.message);
+      err.status = 400;
+      throw err;
+    }
+    const { contactId } = req.params;
+    const result = await updateContact(contactId, req.body);
+    if (!result) {
+      const error = new Error(`Not found`);
+      error.status = 404;
+      throw error;
+    }
+    res.status(200).json({
+      result,
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;
