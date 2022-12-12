@@ -3,7 +3,7 @@ const {
   listContacts,
   getContactById,
   addContact,
-  // removeContact,
+  removeContact,
 } = require('../../models/contacts.js');
 const router = express.Router();
 const { productSchema } = require('../../schemas');
@@ -45,19 +45,15 @@ router.get('/:contactId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-     const { error } = productSchema.validate(req.body);
-     if (error) {
-       const err = new Error(error.message);
-       err.status = 400;
-       throw err;
-     }
+    const { error } = productSchema.validate(req.body);
+    if (error) {
+      const err = new Error(error.message);
+      err.status = 400;
+      throw err;
+    }
     const result = await addContact(req.body);
     res.status(201).json({
-      status: 'success',
-      code: 201,
-      data: {
-        result,
-      },
+      result,
     });
   } catch (error) {
     next(error);
@@ -65,7 +61,20 @@ router.post('/', async (req, res, next) => {
 });
 
 router.delete('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' });
+  try {
+    const { contactId } = req.params;
+    const result = await removeContact(contactId);
+    if (!result) {
+      const error = new Error('Not found');
+      error.status = 404;
+      throw error;
+    }
+    res.status(200).json({
+      message: 'contact deleted',
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.put('/:contactId', async (req, res, next) => {

@@ -2,6 +2,12 @@ const contacts = require('./contacts.json');
 const { v4 } = require('uuid');
 const fs = require('fs/promises');
 const path = require('path');
+
+const rewriteContacts = async (products) => {
+  const filePath = path.join(__dirname, 'contacts.json');
+  await fs.writeFile(filePath, JSON.stringify(products));
+};
+
 const listContacts = async () => contacts;
 
 const getContactById = async (contactId = 1) => {
@@ -13,14 +19,22 @@ const getContactById = async (contactId = 1) => {
   return product;
 };
 
-const removeContact = async (contactId) => {};
+const removeContact = async (contactId) => {
+  const products = await listContacts();
+  const idx = products.findIndex((item) => item.id === contactId.toString());
+  if (idx === -1) {
+    return null;
+  }
+  products.splice(idx, 1);
+  await rewriteContacts(products);
+  return 'Success remove';
+};
 
 const addContact = async (body) => {
   const products = await listContacts();
-  const newProduct = { id: v4(),...body };
+  const newProduct = { id: v4(), ...body };
   products.push(newProduct);
-  const filePath = path.join(__dirname, 'contacts.json');
-  await fs.writeFile(filePath, JSON.stringify(products));
+  await rewriteContacts(products);
   return newProduct;
 };
 
