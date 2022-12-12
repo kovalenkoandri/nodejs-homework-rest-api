@@ -6,7 +6,7 @@ const {
   // removeContact,
 } = require('../../models/contacts.js');
 const router = express.Router();
-
+const { productSchema } = require('../../schemas');
 router.get('/', async (req, res, next) => {
   try {
     const products = await listContacts();
@@ -45,12 +45,12 @@ router.get('/:contactId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    //  const { error } = productSchema.validate(req.body);
-    //  if (error) {
-    //    const err = new Error(error.message);
-    //    err.status = 400;
-    //    throw err;
-    //  }
+     const { error } = productSchema.validate(req.body);
+     if (error) {
+       const err = new Error(error.message);
+       err.status = 400;
+       throw err;
+     }
     const result = await addContact(req.body);
     res.status(201).json({
       status: 'success',
