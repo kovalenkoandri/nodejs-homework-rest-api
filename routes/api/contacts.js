@@ -1,13 +1,11 @@
 const express = require('express');
-const {
-  listContacts,
-  getContactById,
-  addContact,
-  removeContact,
-  updateContact,
-} = require('../../models/contacts.js');
-const router = express.Router();
+const { listContacts } = require('../../models/contacts');
+const { getContactById } = require('../../models/contacts');
+const { addContact } = require('../../models/contacts');
+const { removeContact } = require('../../models/contacts');
+const { updateContact } = require('../../models/contacts');
 const { productSchema } = require('../../schemas');
+const router = express.Router();
 router.get('/', async (req, res, next) => {
   try {
     const products = await listContacts();
@@ -28,7 +26,7 @@ router.get('/:contactId', async (req, res, next) => {
     const { contactId } = req.params;
     const result = await getContactById(contactId);
     if (!result) {
-      const error = new Error(`Product with id=${contactId} not found`);
+      const error = new Error(`Contact with id=${contactId} not found`);
       error.status = 404;
       throw error;
     }
@@ -81,7 +79,7 @@ router.delete('/:contactId', async (req, res, next) => {
     const { contactId } = req.params;
     const result = await removeContact(contactId);
     if (!result) {
-      const error = new Error('Not found');
+      const error = new Error(`Contact with id=${contactId} not found`);
       error.status = 404;
       throw error;
     }
