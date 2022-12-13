@@ -52,6 +52,21 @@ router.post('/', async (req, res, next) => {
       err.status = 400;
       throw err;
     }
+    if ((await listContacts()).find((el) => el.name === req.body.name)) {
+      const err = new Error(`{name} already exists`);
+      err.status = 404;
+      throw err;
+    }
+    if ((await listContacts()).find((el) => el.email === req.body.email)) {
+      const err = new Error(`{email} already exists`);
+      err.status = 404;
+      throw err;
+    }
+    if ((await listContacts()).find((el) => el.phone === req.body.phone)) {
+      const err = new Error(`{phone} already exists`);
+      err.status = 404;
+      throw err;
+    }
     const result = await addContact(req.body);
     res.status(201).json({
       result,
