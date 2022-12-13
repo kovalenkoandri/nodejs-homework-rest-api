@@ -1,18 +1,18 @@
 const contactsOperations = require('../models/contacts');
 const { success200, notFound404, alreadyExists400 } = require('../helpers');
-const listContacts = async (req, res, next) => {
+const listContacts = async (req, res) => {
   const data = await contactsOperations.listContacts();
   success200(res, data);
 };
 
-const getContactById = async (req, res, next) => {
+const getContactById = async (req, res) => {
   const { contactId } = req.params;
   const data = await contactsOperations.getContactById(contactId);
   if (!data) notFound404(contactId);
   success200(res, data);
 };
 
-const addContact = async (req, res, next) => {
+const addContact = async (req, res) => {
   if (
     (await contactsOperations.listContacts()).find(
       (el) => el.name === req.body.name,
@@ -37,7 +37,7 @@ const addContact = async (req, res, next) => {
   });
 };
 
-const removeContact = async (req, res, next) => {
+const removeContact = async (req, res) => {
   const { contactId } = req.params;
   const data = await contactsOperations.removeContact(contactId);
   if (!data) notFound404(data);
@@ -46,7 +46,7 @@ const removeContact = async (req, res, next) => {
   });
 };
 
-const updateContact = async (req, res, next) => {
+const updateContact = async (req, res) => {
   const { contactId } = req.params;
   const data = await contactsOperations.updateContact(contactId, req.body);
   if (!data) notFound404(data);
