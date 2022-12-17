@@ -1,9 +1,11 @@
+const mongoose = require('mongoose');
+const { Category } = require('./models/category');
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
 const contactsRouter = require('./routes/api/contacts');
 require('dotenv').config();
-
+const { DB_HOST, PORT = 3000 } = process.env;
 const app = express();
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
@@ -21,5 +23,26 @@ app.use((req, res) => {
 app.use((err, req, res) => {
   res.status(err.status).json({ message: err.message });
 });
-
+const newCategory = {
+  name: 'tablets',
+  description: 'Самый широкий выбор планшетов!',
+};
+mongoose.set('strictQuery', false);
+mongoose
+  .connect(DB_HOST)
+  .then(async () => {
+    try {
+      console.log('Database connection successful');
+      app.listen(PORT);
+      console.log(`server started!!!!!!!!!! on port: ${PORT}`);
+      const result = Category.create(newCategory);
+      console.log(result);
+    } catch (error) {
+      console.log(error.message);
+      process.exit(1);
+    }
+  })
+  .catch((error) => {
+    console.log(error.message);
+  });
 module.exports = app;
