@@ -1,13 +1,6 @@
-const listContacts = require('./listContacts');
-const { v4 } = require('uuid');
-const rewriteContacts = require('./rewriteContacts');
+const Сontact = require('../category');
 
-const addContact = async (body) => {
-  const products = await listContacts();
-  const newProduct = { id: v4(), ...body };
-  products.push(newProduct);
-  await rewriteContacts(products);
-  return newProduct;
-};
+const addContact = async ({name, email, phone}) =>
+  Сontact.create({ name, email, phone });
 
 module.exports = addContact;

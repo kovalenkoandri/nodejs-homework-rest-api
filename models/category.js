@@ -1,10 +1,22 @@
-const {Schema, model} = require("mongoose");
+const { Schema, model } = require('mongoose');
 
-const categorySchema = Schema({
-    name: String,
-    description: String
+const contactSchema = Schema({
+  name: {
+    type: String,
+    required: [true, 'Set name for contact'],
+  },
+  email: {
+    type: String,
+  },
+  phone: {
+    type: String,
+  },
+  favorite: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-const Category = model("category", categorySchema);
+const Сontact = model('contact', contactSchema);
 
-module.exports = {Category};
+module.exports = { Сontact };

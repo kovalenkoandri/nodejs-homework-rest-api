@@ -1,3 +1,3 @@
-const contacts = require('./contacts.json');
-const listContacts = async () => contacts;
+const Сontact = require('../category');
+const listContacts = async () => Сontact.find();
 module.exports = listContacts;

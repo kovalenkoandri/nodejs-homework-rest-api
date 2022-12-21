@@ -14,4 +14,10 @@ router.delete('/:contactId', controllerWrapper(controllers.removeContact));
 
 router.put('/:contactId', validation400(productSchema), controllerWrapper(controllers.updateContact));
 
+router.patch(
+  '/:contactId/favorite',
+  validation400(productSchema),
+  controllerWrapper(controllers.updateStatusContact),
+);
+
 module.exports = router;
