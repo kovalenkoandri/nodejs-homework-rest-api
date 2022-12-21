@@ -14,24 +14,24 @@ const getContactById = async (req, res) => {
 };
 
 const addContact = async (req, res) => {
-  // if (
-  //   (await contactsOperations.listContacts()).find(
-  //     (el) => el.name === req.body.name,
-  //   )
-  // )
-  //   alreadyExists400(req.body.name);
-  // if (
-  //   (await contactsOperations.listContacts()).find(
-  //     (el) => el.email === req.body.email,
-  //   )
-  // )
-  //   alreadyExists400(req.body.email);
-  // if (
-  //   (await contactsOperations.listContacts()).find(
-  //     (el) => el.phone === req.body.phone,
-  //   )
-  // )
-  //   alreadyExists400(req.body.phone);
+  if (
+    (await contactsOperations.listContacts()).find(
+      (el) => el.name === req.body.name,
+    )
+  )
+    alreadyExists400(req.body.name);
+  if (
+    (await contactsOperations.listContacts()).find(
+      (el) => el.email === req.body.email,
+    )
+  )
+    alreadyExists400(req.body.email);
+  if (
+    (await contactsOperations.listContacts()).find(
+      (el) => el.phone === req.body.phone,
+    )
+  )
+    alreadyExists400(req.body.phone);
   const data = await contactsOperations.addContact(req.body);
   res.status(201).json({
     data,
