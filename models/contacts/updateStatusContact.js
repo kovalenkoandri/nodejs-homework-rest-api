@@ -1,4 +1,4 @@
-const Сontact = require('../category');
+const { Сontact } = require('../category');
 
 const updateStatusContact = async (contactId, body) => {
   const { favorite } = body;

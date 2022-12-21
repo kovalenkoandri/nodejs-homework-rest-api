@@ -1,3 +1,4 @@
-const Сontact = require('../category');
-const listContacts = async () => Сontact.find();
+const { Сontact } = require('../category');
+console.log(Сontact);
+const listContacts = async () => Сontact.find({});
 module.exports = listContacts;

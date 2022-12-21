@@ -1,4 +1,4 @@
-const Сontact = require('../category');
+const { Сontact } = require('../category');
 
 const removeContact = async (contactId) =>
   Сontact.findByIdAndRemove({ _id: contactId });
