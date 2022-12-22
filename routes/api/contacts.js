@@ -2,6 +2,7 @@ const express = require('express');
 const { controllerWrapper, validation400 } = require('../../middlewares');
 const { controllers } = require('../../controllers');
 const { productSchema } = require('../../schemas')
+const { productSchemaFavorite } = require('../../schemas');
 const router = express.Router();
 
 router.get('/', controllerWrapper(controllers.listContacts));
@@ -16,7 +17,7 @@ router.put('/:contactId', validation400(productSchema), controllerWrapper(contro
 
 router.patch(
   '/:contactId/favorite',
-  validation400(productSchema),
+  validation400(productSchemaFavorite),
   controllerWrapper(controllers.updateStatusContact),
 );
 
