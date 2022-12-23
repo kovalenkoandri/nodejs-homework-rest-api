@@ -1,5 +1,5 @@
 node_modules/
 .env
-readme.md
+readme*.md
 package-lock.json
 .vscode/

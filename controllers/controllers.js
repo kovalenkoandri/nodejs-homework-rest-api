@@ -1,5 +1,6 @@
 const contactsOperations = require('../models/contacts');
 const { success200, notFound404, alreadyExists400 } = require('../helpers');
+
 const listContacts = async (req, res) => {
   const data = await contactsOperations.listContacts();
   success200(res, data);
@@ -53,10 +54,21 @@ const updateContact = async (req, res) => {
   success200(res, data);
 };
 
+const updateStatusContact = async (req, res) => {
+  const { contactId } = req.params;
+  const data = await contactsOperations.updateStatusContact(
+    contactId,
+    req.body,
+  );
+  if (!data) notFound404(data);
+  success200(res, data);
+};
+
 module.exports = {
   listContacts,
   getContactById,
   addContact,
   removeContact,
   updateContact,
+  updateStatusContact,
 };
