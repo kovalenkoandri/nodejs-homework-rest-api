@@ -14,11 +14,9 @@ router.post(
     validation400(joiRegisterSchema),
   controllerWrapper(ctrl.register),
 );
-// router.post("/signup")
-// router.post(
-//   '/login',
-  //   validation400(joiLoginSchema),
-  //   controllerWrapper(controllers.login),
-// );
-// router.post("/signin")
+router.post(
+  '/login',
+  validation400(joiLoginSchema),
+  controllerWrapper(ctrl.login),
+);
 module.exports = router;
