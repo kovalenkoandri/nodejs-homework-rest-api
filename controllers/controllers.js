@@ -2,7 +2,7 @@ const contactsOperations = require('../models/contacts');
 const { success200, notFound404, alreadyExists400 } = require('../helpers');
 
 const listContacts = async (req, res) => {
-  const data = await contactsOperations.listContacts();
+  const data = await contactsOperations.listContacts(req);
   success200(res, data);
 };
 
@@ -32,7 +32,8 @@ const addContact = async (req, res) => {
     )
   )
     alreadyExists400(req.body.phone);
-  const data = await contactsOperations.addContact(req.body);
+  const { _id } = req.user;
+  const data = await contactsOperations.addContact({...req.body, owner: _id});
   res.status(201).json({
     data,
   });

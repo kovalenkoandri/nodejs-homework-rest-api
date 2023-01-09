@@ -5,7 +5,7 @@ const { productSchema } = require('../../schemas')
 const { productSchemaFavorite } = require('../../schemas');
 const router = express.Router();
 
-router.get('/', controllerWrapper(controllers.listContacts));
+router.get('/', auth, controllerWrapper(controllers.listContacts));
 
 router.get('/:contactId', controllerWrapper(controllers.getContactById));
 
