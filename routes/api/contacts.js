@@ -1,5 +1,5 @@
 const express = require('express');
-const { controllerWrapper, validation400 } = require('../../middlewares');
+const {auth, controllerWrapper, validation400 } = require('../../middlewares');
 const { controllers } = require('../../controllers');
 const { productSchema } = require('../../schemas')
 const { productSchemaFavorite } = require('../../schemas');
@@ -9,7 +9,7 @@ router.get('/', controllerWrapper(controllers.listContacts));
 
 router.get('/:contactId', controllerWrapper(controllers.getContactById));
 
-router.post('/', validation400(productSchema),controllerWrapper(controllers.addContact));
+router.post('/', auth, validation400(productSchema),controllerWrapper(controllers.addContact));
 
 router.delete('/:contactId', controllerWrapper(controllers.removeContact));
 
