@@ -1,5 +1,5 @@
 const { User } = require('../../models');
-const { Unauthorized } = require('http-erros');
+const { Unauthorized } = require('http-errors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { SECRET_KEY } = process.env;
