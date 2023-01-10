@@ -1,4 +1,4 @@
-const { Сontact } = require('../contact');
+const { Сontact } = require('../../models');
 
 const updateStatusContact = async (contactId, body) => {
   const { favorite } = body;

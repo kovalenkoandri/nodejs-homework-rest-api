@@ -36,4 +36,4 @@ module.exports = { joiContactSchema, joiContactSchemaFavorite };
 
 const Сontact = model('contact', contactSchema);
 
-module.exports = { Сontact };
+module.exports = Сontact;

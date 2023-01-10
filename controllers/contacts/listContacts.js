@@ -1,4 +1,4 @@
-const { Сontact } = require('../contact');
+const { Сontact } = require('../../models');
 const listContacts = async (req) => {
   const { _id } = req.user;
   const { page = 1, limit = 20 } = req.query;
