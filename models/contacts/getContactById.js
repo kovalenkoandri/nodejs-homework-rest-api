@@ -1,4 +1,4 @@
-const { Сontact } = require('../category');
+const { Сontact } = require('../contact');
 
 const getContactById = async (contactId = 1) =>
   Сontact.findOne({ _id: contactId });
