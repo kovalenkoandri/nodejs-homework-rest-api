@@ -8,7 +8,7 @@ const register = async (req, res) => {
     throw new Conflict(`User with ${email} already exists`);
   }
   const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-  const result = await User.create({ name, email, password: hashPassword });
+  await User.create({ name, email, password: hashPassword });
   res.status(201).json({
     status: 'success',
     code: 201,

@@ -7,14 +7,14 @@ const { joiRegisterSchema, joiLoginSchema } = require('../../models/user');
 const router = express.Router();
 
 router.post(
-  '/register',
+  '/users/signup',
   validation400(joiRegisterSchema),
   controllerWrapper(ctrl.register),
 );
 router.post(
-  '/login',
+  '/users/login',
   validation400(joiLoginSchema),
   controllerWrapper(ctrl.login),
 );
-router.get('/logout', auth, controllerWrapper(ctrl.logout));
+router.get('/users/logout', auth, controllerWrapper(ctrl.logout));
 module.exports = router;
