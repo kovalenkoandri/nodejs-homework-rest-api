@@ -7,4 +7,6 @@ const router = express.Router();
 
 router.get('/users/current', auth, controllerWrapper(ctrl.getCurrent));
 
+router.patch('/users', auth, controllerWrapper(ctrl.updateSubscription));
+
 module.exports = router;
