@@ -1,8 +1,11 @@
 const express = require('express');
 const { auth, controllerWrapper, validation400 } = require('../../middlewares');
 const { contacts: ctrl } = require('../../controllers');
-const { joiContactSchema } = require('../../models/contact');
-const { joiContactSchemaFavorite } = require('../../models/contact');
+const {
+  joiContactSchema,
+  joiContactPutSchema,
+  joiContactSchemaFavorite,
+} = require('../../models/contact');
 const router = express.Router();
 
 router.get('/', auth, controllerWrapper(ctrl.listContacts));
@@ -20,7 +23,7 @@ router.delete('/:contactId', controllerWrapper(ctrl.removeContact));
 
 router.put(
   '/:contactId',
-  validation400(joiContactSchema),
+  validation400(joiContactPutSchema),
   controllerWrapper(ctrl.updateContact),
 );
 
