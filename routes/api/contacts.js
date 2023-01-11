@@ -20,7 +20,7 @@ router.delete('/:contactId', controllerWrapper(ctrl.removeContact));
 
 router.put(
   '/:contactId',
-  // validation400(joiContactSchema),
+  validation400(joiContactSchema),
   controllerWrapper(ctrl.updateContact),
 );
 

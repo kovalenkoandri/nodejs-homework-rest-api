@@ -26,7 +26,7 @@ const contactSchema = Schema(
 );
 
 const joiContactSchema = Joi.object({
-  name: Joi.string().alphanum().min(5).max(20).required(),
+  name: Joi.string().pattern(/\w\s\w/).min(5).max(20).required(),
   email: Joi.string().email().required(),
   phone: Joi.string().min(5).max(20).required(),
   favorite: Joi.boolean(),
