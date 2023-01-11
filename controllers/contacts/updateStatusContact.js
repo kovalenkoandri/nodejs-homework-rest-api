@@ -1,10 +1,10 @@
-const { Сontact } = require('../../models');
+const { Contact } = require('../../models');
 const { notFound404, success200 } = require('../../helpers');
 
 const updateStatusContact = async (req, res) => {
   const { contactId } = req.params;
   const { favorite } = req.body;
-  const data = await Сontact.findByIdAndUpdate(
+  const data = await Contact.findByIdAndUpdate(
     { _id: contactId },
     { favorite },
     { new: true },
