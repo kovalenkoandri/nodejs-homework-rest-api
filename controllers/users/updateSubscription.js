@@ -7,7 +7,10 @@ const updateSubscription = async (req, res) => {
   const data = await User.findByIdAndUpdate(
     { _id },
     { subscription },
-    { new: true },
+    {
+      new: true,
+      runValidators: true,
+    },
   );
   if (!data) notFound404(data);
   success200(res, data);
