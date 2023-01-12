@@ -1,5 +1,5 @@
-const alreadyExists400 = (arg) => {
-  const error = new Error(`${arg} already exists`);
+const alreadyExists400 = (arg = 'Object') => {
+  const error = new Error(`${arg} already exists-))`);
   error.status = 400;
   throw error;
 };
