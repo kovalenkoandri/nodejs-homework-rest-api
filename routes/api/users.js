@@ -2,7 +2,7 @@ const express = require("express");
 
 const { joiUpdateSubscription } = require('../../models/user');
 const {
-  auth,
+  auth, upload,
   controllerWrapper,
   validationQuery,
 } = require('../../middlewares');
@@ -11,7 +11,12 @@ const {users: ctrl} = require("../../controllers");
 const router = express.Router();
 
 router.get('/current', auth, controllerWrapper(ctrl.getCurrent));
-
+router.patch(
+  '/avatars',
+  auth,
+  upload.single('avatar'),
+  controllerWrapper(ctrl.updateAvatar),
+);
 router.patch(
   '/',
   auth,
