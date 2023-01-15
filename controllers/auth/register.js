@@ -9,9 +9,16 @@ const register = async (req, res) => {
   if (user) {
     throw new Conflict(`User with ${email} already exists`);
   }
-  const avatarURL = gravatar.url(email);
+
+  const avatarURL = gravatar.url(email, {
+    protocol: 'https',
+    size: '150',
+    rating: 'g',
+    default: 'retro',
+  });
+
   const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-  await User.create({ name, email, password: hashPassword }, avatarURL);
+  await User.create({ name, email, password: hashPassword, avatarURL });
   res.status(201).json({
     status: 'success',
     code: 201,
@@ -24,4 +31,5 @@ const register = async (req, res) => {
     },
   });
 };
+
 module.exports = register;
