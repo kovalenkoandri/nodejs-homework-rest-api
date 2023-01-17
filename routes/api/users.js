@@ -15,7 +15,6 @@ router.patch(
   '/avatars',
   auth,
   upload.single('avatar2'),
-  // controllerWrapper(ctrl.handleJimp),
   controllerWrapper(ctrl.updateAvatar),
 );
 router.patch(

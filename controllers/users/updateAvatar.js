@@ -1,6 +1,7 @@
 const { User } = require('../../models');
-const fs = require('fs/promises');
-// const Jimp = require('jimp');
+const fsSync = require('fs');
+const Jimp = require('jimp');
+// const sharp = require('sharp');
 require('dotenv').config();
 const cloudinary = require('cloudinary').v2;
 
@@ -10,15 +11,16 @@ cloudinary.config({
 
 const updateAvatar = async (req, res) => {
   const tempUpload = req.file.path;
-  // const tempUpload = 'public/avatars/2.png';
-  //  Jimp.read(tempUpload).then((img) => {
-  //   img.resize(250, 250).write(tempUpload);
-  // });
-  
+
   try {
     let avatarURL;
+    await Jimp.read(tempUpload).then((img) => {
+      img.resize(250, 250).write('temp/3.png');
+    });
+    // await sharp('temp/2.png').resize(320, 240).toFile('temp/3.png');
+
     await cloudinary.uploader
-      .upload(tempUpload, {
+      .upload('temp/3.png', {
         tags: 'basic_sample',
         // height: 250,
         // width: 250,
@@ -37,7 +39,8 @@ const updateAvatar = async (req, res) => {
     await User.findByIdAndUpdate(req.user._id, { avatarURL });
     res.json({ avatarURL });
   } finally {
-     await fs.unlink(tempUpload);
+    const files = ['temp/2.png', 'temp/3.png'];
+    files.forEach((path) => fsSync.existsSync(path) && fsSync.unlinkSync(path));
   }
 };
 
