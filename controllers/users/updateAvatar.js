@@ -1,6 +1,6 @@
 const { User } = require('../../models');
-// const fsSync = require('fs');
-const fs = require('fs/promises');
+const fsSync = require('fs');
+// const fs = require('fs/promises');
 const Jimp = require('jimp');
 // const sharp = require('sharp');
 require('dotenv').config();
@@ -9,8 +9,8 @@ const cloudinary = require('cloudinary').v2;
 cloudinary.config({
   secure: true,
 });
-const tempDir = 'temp/rm';
-Promise.resolve(fs.mkdir(tempDir, { recursive: true }));
+// const tempDir = 'temp/rm';
+// Promise.resolve(fs.mkdir(tempDir, { recursive: true }));
 
 const updateAvatar = async (req, res) => {
   const tempUpload = req.file.path;
@@ -25,6 +25,7 @@ const updateAvatar = async (req, res) => {
     await cloudinary.uploader
       .upload('temp/rm/3.png', {
         tags: 'basic_sample',
+        public_id: 'my_favorite_pizza',
         // height: 250,
         // width: 250,
         // crop: 'fill',
@@ -42,14 +43,14 @@ const updateAvatar = async (req, res) => {
     await User.findByIdAndUpdate(req.user._id, { avatarURL });
     res.json({ avatarURL });
   } finally {
-    // const files = ['temp/2.png', 'temp/3.png'];
-    // files.forEach((path) => fsSync.existsSync(path) && fsSync.unlinkSync(path));
-    await fs.rm(tempDir, { recursive: true, force: true }, (err) => {
-      if (err) {
-        throw err;
-      }
-    });
-    await fs.mkdir(tempDir, { recursive: true });
+    const files = ['temp/rm/2.png', 'temp/rm/3.png'];
+    files.forEach((path) => fsSync.existsSync(path) && fsSync.unlinkSync(path));
+    // await fs.rm(tempDir, { recursive: true, force: true }, (err) => {
+    //   if (err) {
+    //     throw err;
+    //   }
+    // });
+    // await fs.mkdir(tempDir, { recursive: true });
   }
 };
 
