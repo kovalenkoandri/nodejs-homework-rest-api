@@ -49,6 +49,7 @@ const updateAvatar = async (req, res) => {
       .upload({
         file: base64String,
         fileName: 'myimage.jpg',
+        useUniqueFileName: false,
       })
       .then((response) => {
         console.log(response);
