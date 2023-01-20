@@ -17,6 +17,11 @@ router.patch(
   upload.single('avatar2'),
   controllerWrapper(ctrl.updateAvatar),
 );
+router.get(
+  '/verify/:verificationToken',
+  auth,
+  controllerWrapper(ctrl.verifyEmail),
+);
 router.patch(
   '/',
   auth,
