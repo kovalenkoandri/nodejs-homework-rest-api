@@ -12,6 +12,10 @@ const login = async (req, res) => {
     throw new Unauthorized(`Email ${email} not found`);
   }
 
+  if (!user.verify) {
+    throw new Unauthorized('Unauthorized/wrong email');
+  }
+
   const passCompare = user.comparePassword(password);
   if (!passCompare) {
     throw new Unauthorized('Password wrong');
