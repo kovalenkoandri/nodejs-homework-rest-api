@@ -3,6 +3,36 @@ const { Conflict } = require('http-errors');
 const gravatar = require('gravatar');
 const { v4: uuidv4 } = require('uuid');
 const { sendEmail } = require('../../helpers');
+const nodemailer = require('nodemailer');
+require('dotenv').config();
+
+const { SENDINBLUE } = process.env;
+ 
+const nodemailerConfig = {
+  host: 'smtp-relay.sendinblue.com',
+  port: 587, // 25, 465 и 2255
+  secure: false,
+  ignoreTLS: true,
+  auth: {
+    user: 'wawa260@gmail.com',
+    pass: SENDINBLUE,
+  },
+};
+ 
+const transporter = nodemailer.createTransport(nodemailerConfig);
+
+const email = {
+  to: 'wawa260@gmail.com',
+  from: 'wawa260@meta.ua',
+  subject: 'Message title',
+  text: 'Plaintext version of the message',
+  html: '<p>HTML version of the message</p>',
+};
+
+// transporter
+//   .sendMail(email)
+//   .then(() => console.log('Email send success'))
+//   .catch((error) => console.log(error.message));
 
 const register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -25,7 +55,7 @@ const register = async (req, res) => {
   newUser.setPassword(password);
 
   newUser.save();
-
+ 
   const mail = {
     to: email,
     subject: 'Подтверждения email',
