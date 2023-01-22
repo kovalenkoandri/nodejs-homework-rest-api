@@ -1,12 +1,14 @@
-const express = require("express");
+const express = require('express');
 
-const { joiUpdateSubscription } = require('../../models/user');
+const { joiUpdateSubscription, joiVerifyEmail } = require('../../models/user');
 const {
-  auth, upload,
+  auth,
+  upload,
   controllerWrapper,
   validationQuery,
+  validation400,
 } = require('../../middlewares');
-const {users: ctrl} = require("../../controllers");
+const { users: ctrl } = require('../../controllers');
 
 const router = express.Router();
 
@@ -17,12 +19,10 @@ router.patch(
   upload.single('avatar2'),
   controllerWrapper(ctrl.updateAvatar),
 );
-router.get(
-  '/verify/:verificationToken',
-  controllerWrapper(ctrl.verifyEmail),
-);
+router.get('/verify/:verificationToken', controllerWrapper(ctrl.verifyEmail));
 router.post(
   '/verify',
+  validation400(joiVerifyEmail),
   controllerWrapper(ctrl.verifyResend),
 );
 router.patch(

@@ -1,7 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const { sendEmail } = require('../../helpers');
 const { User } = require('../../models');
-const { Unauthorized } = require('http-errors');
 
 const verifyResend = async (req, res) => {
   const { email } = req.body;
