@@ -4,3 +4,4 @@ readme*
 package-lock.json
 .vscode/
 controllers/contacts/template.json
+controllers/auth/login.test.js

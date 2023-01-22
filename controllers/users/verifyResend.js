@@ -15,9 +15,7 @@ const verifyResend = async (req, res) => {
     await User.findByIdAndUpdate(user._id, {
       verificationToken,
     });
-      throw new Unauthorized(
-        'Unauthorized/wrong email, please check your register email for letter and go by the link within',
-      );
+    res.status(200).json({ message: 'Verification email sent' });
   }
   if (user.verify) {
     res.status(400).json({
