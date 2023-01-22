@@ -19,7 +19,6 @@ router.patch(
 );
 router.get(
   '/verify/:verificationToken',
-  auth,
   controllerWrapper(ctrl.verifyEmail),
 );
 router.patch(

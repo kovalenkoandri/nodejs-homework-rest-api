@@ -5,7 +5,7 @@ const { SENDINBLUE } = process.env;
 
 const nodemailerConfig = {
   host: 'smtp-relay.sendinblue.com',
-  port: 587, // 25, 465 и 2255
+  port: 587,
   secure: false,
   ignoreTLS: true,
   auth: {
