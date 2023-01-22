@@ -1,15 +1,26 @@
 const { User } = require('../../models');
 const { Unauthorized } = require('http-errors');
 const jwt = require('jsonwebtoken');
+const { v4: uuidv4 } = require('uuid');
+const { sendEmail } = require('../../helpers');
 
 const login = async (req, res) => {
-
   const { SECRET_KEY } = process.env;
   const { email, password } = req.body;
-  
+
   const user = await User.findOne({ email });
   if (!user) {
     throw new Unauthorized(`Email ${email} not found`);
+  }
+  if (!user.verify) {
+    const verificationToken = uuidv4();
+    await sendEmail(email, verificationToken);
+    await User.findByIdAndUpdate(user._id, {
+      verificationToken,
+    });
+    throw new Unauthorized(
+      'Unauthorized/wrong email, please check your register email for letter and go by the link within',
+    );
   }
 
   const passCompare = user.comparePassword(password);

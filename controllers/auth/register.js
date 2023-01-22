@@ -1,6 +1,8 @@
 const { User } = require('../../models');
 const { Conflict } = require('http-errors');
 const gravatar = require('gravatar');
+const { v4: uuidv4 } = require('uuid');
+const { sendEmail } = require('../../helpers');
 
 const register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -9,6 +11,8 @@ const register = async (req, res) => {
     throw new Conflict(`User with ${email} already exists`);
   }
 
+  const verificationToken = uuidv4();
+
   const avatarURL = gravatar.url(email, {
     protocol: 'https',
     size: '150',
@@ -16,12 +20,14 @@ const register = async (req, res) => {
     default: 'retro',
   });
 
-  const newUser = new User({ name, email, avatarURL });
+  const newUser = new User({ name, email, avatarURL, verificationToken });
 
   newUser.setPassword(password);
 
-  newUser.save();
-   
+  await newUser.save();
+
+  await sendEmail(email, verificationToken);
+
   res.status(201).json({
     status: 'success',
     code: 201,
