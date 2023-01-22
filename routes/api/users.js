@@ -21,6 +21,10 @@ router.get(
   '/verify/:verificationToken',
   controllerWrapper(ctrl.verifyEmail),
 );
+router.post(
+  '/verify',
+  controllerWrapper(ctrl.verifyResend),
+);
 router.patch(
   '/',
   auth,
