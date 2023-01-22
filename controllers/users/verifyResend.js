@@ -6,7 +6,7 @@ const verifyResend = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
-    res.status(400).json({ message: 'missing required field email' });
+    res.status(400).json({ message: 'registtation by endpoint <yourhost>/api/users/signup at first required' });
   }
   if (!user.verify) {
     const verificationToken = uuidv4();
