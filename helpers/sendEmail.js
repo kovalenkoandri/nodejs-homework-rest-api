@@ -1,14 +1,30 @@
-const sgMail = require('@sendgrid/mail');
 require('dotenv').config();
+const nodemailer = require('nodemailer');
 
-const { SENDGRID_API_KEY } = process.env;
+const { SENDINBLUE } = process.env;
 
-sgMail.setApiKey(SENDGRID_API_KEY);
+const nodemailerConfig = {
+  host: 'smtp-relay.sendinblue.com',
+  port: 587, // 25, 465 и 2255
+  secure: false,
+  ignoreTLS: true,
+  auth: {
+    user: 'wawa260@gmail.com',
+    pass: SENDINBLUE,
+  },
+};
 
-const sendEmail = async (data) => {
-  const email = { ...data, from: 'wawa260@gmail.com' };
-  await sgMail.send(email);
-  return true;
+const transporter = nodemailer.createTransport(nodemailerConfig);
+
+const sendEmail = async (toMail, verificationToken) => {
+  const email = {
+    to: toMail,
+    from: 'wawa260@meta.ua',
+    subject: 'Message title',
+    text: 'Plaintext version of the message',
+    html: `<a target="_blank" href="http://localhost:4000/api/users/verify/${verificationToken}">Подтвердить email</a>`,
+  };
+  await transporter.sendMail(email);
 };
 
 module.exports = sendEmail;
