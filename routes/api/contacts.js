@@ -8,6 +8,7 @@ const {
 } = require('../../models/contact');
 const router = express.Router();
 
+router.get('/listContactsPagination', auth, controllerWrapper(ctrl.listContactsPagination));
 router.get('/', auth, controllerWrapper(ctrl.listContacts));
 
 router.get('/:contactId', controllerWrapper(ctrl.getContactById));
